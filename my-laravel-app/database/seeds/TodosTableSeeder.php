@@ -11,15 +11,16 @@ class TodosTableSeeder extends Seeder
      */
     public function run()
     {
+
         DB::table('todos')->insert([
             [
-                'id' => '2',
-                'user_id' => '2',
-                'title' => 'title',
-                'detail' => 'detail',
+                'id' => rand(),
+                'user_id' => rand(),
+                'title' => Str::random(10),
+                'detail' => Str::random(10),
                 'status' => '1',
-                'completed_at' => date('Y-m-d H:i:s'),
-                'deleted_at' => date('Y-m-d H:i:s'),
+                //'completed_at' => date('Y-m-d H:i:s'),
+                //'deleted_at' => date('Y-m-d H:i:s'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
              ]
