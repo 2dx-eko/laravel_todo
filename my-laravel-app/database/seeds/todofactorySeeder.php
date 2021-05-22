@@ -11,6 +11,8 @@ class todofactorySeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Topic::class, 10)->create(); // 20件のデータを作成
+        factory(App\Todo::class, 10)->create(); // 20件のデータを作成
     }
 }
+//$ php artisan db:seed --class=TodosTableSeeder
+//$ php artisan db:seed --class=todofactorySeeder

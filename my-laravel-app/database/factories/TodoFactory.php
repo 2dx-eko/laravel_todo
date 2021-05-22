@@ -5,7 +5,7 @@
 use App\Topic;
 use Faker\Generator as Faker;
 
-$factory->define(App\Topic::class, function (Faker $faker) {
+$factory->define(App\Todo::class, function (Faker $faker) {
     return [
         'id' => $faker->randomNumber(),
         'user_id' => $faker->randomNumber(),

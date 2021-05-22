@@ -1,5 +1,5 @@
 <?php
-
+use App\User;
 use Illuminate\Database\Seeder;
 
 class TodosTableSeeder extends Seeder
@@ -11,10 +11,10 @@ class TodosTableSeeder extends Seeder
      */
     public function run()
     {
-
+        $id = User::inRandomOrder()->first();
         DB::table('todos')->insert([
             [
-                'id' => rand(),
+                'id' => $id,
                 'user_id' => rand(),
                 'title' => Str::random(10),
                 'detail' => Str::random(10),
