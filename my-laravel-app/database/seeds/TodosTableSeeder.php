@@ -11,11 +11,12 @@ class TodosTableSeeder extends Seeder
      */
     public function run()
     {
-        $id = User::inRandomOrder()->first();
+        $user = User::inRandomOrder()->first();
+        $user_id = User::inRandomOrder()->first();
         DB::table('todos')->insert([
             [
-                'id' => $id,
-                'user_id' => rand(),
+                'id' => $user->id,
+                'user_id' => $user_id->id,
                 'title' => Str::random(10),
                 'detail' => Str::random(10),
                 'status' => '1',
