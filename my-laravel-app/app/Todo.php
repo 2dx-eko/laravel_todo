@@ -3,16 +3,10 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
-class Todo extends Model
+class todo extends Model
 {
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'id', 'user_id', 'title','detail','status','created_at','updated_at',
-    ];
+    $todos = DB::select('select * from todos');
+    return $todos;
 }
