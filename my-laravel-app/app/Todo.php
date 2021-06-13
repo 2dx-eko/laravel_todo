@@ -5,8 +5,10 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-class todo extends Model
+class Todo extends Model
 {
-    $todos = DB::select('select * from todos');
-    return $todos;
+    /*public static function where(){
+        $test = "test";
+        return $test;
+    }*/
 }
