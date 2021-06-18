@@ -16,18 +16,14 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-
-Auth::routes();
-
-Route::get('/todo', 'TodoController@view')->name('todo');
-
 /*
+Auth::routes();
+Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/todo', 'TodoController@view')->name('todo');
+*/
+
+Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/todo', 'TodoController@view')->name('todo');
-}); */
+});
