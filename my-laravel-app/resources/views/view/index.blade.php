@@ -6,9 +6,11 @@
 <body>
     <h1>一覧画面</h1>
     <ul>
-        @foreach ($todos as $todo)
-        <li>{{ $todo->id }}</li>
-        @endforeach
+        
+        <li>ログインしているユーザーID：{{ $todos }}</li>
+        <div>
+            <a href="/todo/new">新規ページ作成画面</a>
+        </div>
     </ul>
 </body>
 </html>
