@@ -30,20 +30,19 @@ class TodoController extends Controller
     }*/
     //新規ページ作成
     public function new(){
-        $id = Auth::id();
-
-        $test = "new";        
-        return view('todo.new', ['test' => $test]);
+        $id = Auth::id(); 
+        return view('todo.new', ['id' => $id]);
     }    
     
     //DB登録
     public function store(Request $request){
         $id = Auth::id();
-        if(isset($_SERVER["POST"])){
-            $title = $request->input("title");
-            $detail = $request->input("detail");
-            $results = DB::select("INSERT INTO todos(user_id,title,detail,status) VALUES(1,1,23,1)");
-        }
+        $store = new Todo;
+        $store->user_id = $request->user_id;
+        $store->title = $request->title;
+        $store->detail = $request->detail;
+        $store->save();
+        return redirect('/todo');
     }
     
     //詳細ページ
