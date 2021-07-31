@@ -22,14 +22,14 @@
             
             <div>タイトル</div>
             <div>
-                <input type="hidden" name="user_id" value="{{$id}}">
-                <input name="title" type="text" value="">
+                
+                <input name="title" type="text" value="{{old('title')}}">
             </div>
         </div>
         <div>
             <div>詳細</div>
         <div>
-            <textarea name="detail"></textarea>
+            <textarea name="detail">{{old('detail')}}</textarea>
         </div>
         </div>
         <button name="new_button" type="submit">登録</button>

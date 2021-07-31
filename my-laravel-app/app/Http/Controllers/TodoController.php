@@ -36,21 +36,19 @@ class TodoController extends Controller
     
     //DB登録
     public function store(Request $request){
-        $this->validate($request, [
-            'title' => ['required'],
-            'detail' => ['required']
-        ],[
-            'title.required' => ':attributeは必須です。',
-            'detail.required' => ':attributeは必須です。',
-        ],[
-            'title' => 'タイトル',
-            'detail' => '詳細',
-        ]);
-        $this->validate($request, $rules);
+        $request->validate([
+            'title' => 'required',
+            'detail' => 'required',
+          ],
+          [
+            'title.required' => '名前は必須項目です',
+            'detail.required' => '詳細は必須項目です' 
+          ]);
+   
         try{
             $id = Auth::id();
             $todo = new Todo;
-            $todo->user_id = $request->user_id;
+            $todo->user_id = $id;
             $todo->title = $request->title;
             $todo->detail = $request->detail;
             $todo->save();
