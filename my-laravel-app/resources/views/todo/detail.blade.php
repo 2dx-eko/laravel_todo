@@ -14,16 +14,17 @@
     </thead>
     <tbody>
         <tr>
-            <td scope="row">タイトルタイトル</td>
-            <td>詳細詳細詳細</td>
+            @foreach ($detail_list as $detail_lists)
+                <td>{{ $detail_lists['title'] }}</td>
+                <td>{{ $detail_lists['detail'] }}</td>
+            @endforeach
         </tr>
     </tbody>
     </table>
     <br>
     <div>
         <button>
-            <a href="/todo/edit">編集</a>
-            <!--a href="./edit.php?todo_id=33">編集</a-->
+          <a href="/todo/edit/?id={{ $id }}">編集</a>
         </button>
     </div>
 </body>

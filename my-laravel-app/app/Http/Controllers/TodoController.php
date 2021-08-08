@@ -6,28 +6,23 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\todo;
+use App\todos;
 use Illuminate\Support\Facades\Auth;
 
 
 class TodoController extends Controller
 {
+    ///一覧画面表示
     public function index(){
         //$todos = Todo::all();
         // 現在認証されているユーザーのID取得
         $todos = Auth::id();
-
-        return view('todo.index', ['todos' => $todos]);
-      
+        $title_list = todos::where('user_id',$todos)->get();
+        return view('todo.index',compact("todos","title_list"));
     }
 
-    //新規ページ作成
-    /*public function new(Request $request){
-        $test = "new";
-        $title = $request->input("title");
-        $detail = $request->input("detail");
-        var_dump($title);
-        return view('todo.new', ['test' => $test]);
-    }*/
+
+
     //新規ページ作成
     public function new(){
         $id = Auth::id(); 
@@ -41,7 +36,7 @@ class TodoController extends Controller
             'detail' => 'required',
           ],
           [
-            'title.required' => '名前は必須項目です',
+            'title.required' => 'titleは必須項目です',
             'detail.required' => '詳細は必須項目です' 
           ]);
    
@@ -60,13 +55,37 @@ class TodoController extends Controller
     
     //詳細ページ
     public function detail(){
-        $test = "detail";
-        return view('todo.detail', ['test' => $test]);
+        $id = request("id"); //URLのパラメータ取得(hidenに格納)
+        $detail_list = todos::where('id',$id)->get();
+        return view('todo.detail',compact("id","detail_list"));
     }
     
     //編集ページ
     public function edit(){
-    $test = "edit";
-    return view('todo.edit', ['test' => $test]);
-}
+        $id = request("id"); //URLのパラメータ取得(hidenに格納)
+        return view('todo.edit', ['id' => $id]);
+    }
+    
+    //編集ページ送信された時実行
+    public function update(Request $request){
+        $request->validate([
+            'title' => 'required',
+            'detail' => 'required',
+          ],
+          [
+            'title.required' => 'titleは必須項目です',
+            'detail.required' => '詳細は必須項目です' 
+          ]);
+   
+        try{
+            $post = todos::find((int)$request->id);
+            $post->title = $request->title;
+            $post->detail = $request->detail;
+            $post->save();
+
+            return redirect('/todo');
+        }catch(Exeption $e){
+            return redirect('/todo/new');
+        }
+    }
 }

@@ -5,22 +5,29 @@
 </head>
 <body>
     <div>編集画面</div>
-    <form action="/todo/edit" method="post">
+    <form method="post">
+    @csrf
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
         <div>
             <div>
-                <input name="title" type="text" value="firsttitle">
-            </div>
-            <div>
-                <input name="id" type="hidden" value="41">
+                title<br>
+                <input name="title" type="text" value="{{old('title')}}">
             </div>
         </div>
         <div>
             <div>詳細</div>
             <div>
-                <textarea name="detail">                                                                        </textarea>
+                <textarea name="detail">{{old('detail')}}</textarea>
             </div>
         </div>
-        <button type="submit" name="register">登録</button>    
+        <div>
+            <input name="id" type="hidden" value="{{$id}}">
+        </div>
+        <button type="submit">登録内容を更新</button>    
     </form>
 
 </body>
