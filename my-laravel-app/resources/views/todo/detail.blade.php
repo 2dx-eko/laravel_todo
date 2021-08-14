@@ -14,10 +14,8 @@
     </thead>
     <tbody>
         <tr>
-            @foreach ($detail_list as $detail_lists)
-                <td>{{ $detail_lists['title'] }}</td>
-                <td>{{ $detail_lists['detail'] }}</td>
-            @endforeach
+            <td>{{ $todo['title'] }}</td>
+            <td>{{ $todo['detail'] }}</td>
         </tr>
     </tbody>
     </table>

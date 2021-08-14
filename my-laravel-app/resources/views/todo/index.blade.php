@@ -7,17 +7,17 @@
     <h1>一覧画面</h1>
     <ul>
         
-        <li>ログインしているユーザーID：{{ $todos }}</li>
+        <li>ログインしているユーザーID：{{ $user_id }}</li>
         <div>
             <a href="/todo/new">新規ページ作成画面</a>
         </div>
         <div>
         <br><br>
         登録した詳細はこちら
-        @foreach ($title_list as $title_lists)
+        @foreach ($todos as $todo)
             <li>
-                <a href="/todo/detail/?id={{ $title_lists['id'] }}">
-                {{ $title_lists["title"] }}
+                <a href="/todo/detail/?id={{ $todo['id'] }}">
+                {{ $todo["title"] }}
                 </a>
             </li>
         @endforeach

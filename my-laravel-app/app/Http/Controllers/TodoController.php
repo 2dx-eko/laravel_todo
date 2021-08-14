@@ -6,7 +6,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\todo;
-use App\todos;
+
 use Illuminate\Support\Facades\Auth;
 
 
@@ -14,11 +14,9 @@ class TodoController extends Controller
 {
     ///一覧画面表示
     public function index(){
-        //$todos = Todo::all();
-        // 現在認証されているユーザーのID取得
-        $todos = Auth::id();
-        $title_list = todos::where('user_id',$todos)->get();
-        return view('todo.index',compact("todos","title_list"));
+        $user_id = Auth::id();
+        $todos = todo::where('user_id',$user_id)->get();
+        return view('todo.index',compact("user_id","todos"));
     }
 
 
@@ -56,8 +54,9 @@ class TodoController extends Controller
     //詳細ページ
     public function detail(){
         $id = request("id"); //URLのパラメータ取得(hidenに格納)
-        $detail_list = todos::where('id',$id)->get();
-        return view('todo.detail',compact("id","detail_list"));
+        (int)$id;
+        $todo = todo::find($id);
+        return view('todo.detail',compact("id","todo"));
     }
     
     //編集ページ
@@ -78,7 +77,7 @@ class TodoController extends Controller
           ]);
    
         try{
-            $post = todos::find((int)$request->id);
+            $post = todo::find((int)$request->id);
             $post->title = $request->title;
             $post->detail = $request->detail;
             $post->save();
