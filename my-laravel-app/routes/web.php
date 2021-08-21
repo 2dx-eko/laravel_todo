@@ -25,9 +25,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/todo/new', 'TodoController@new')->name('new');
     Route::post('/todo/new', 'TodoController@store')->name('store');
 
-    Route::get('/todo/detail', 'TodoController@detail')->name('detail');
+    Route::get('/todo/detail/{id}', 'TodoController@detail')->name('detail');
 
 
-    Route::get('/todo/edit', 'TodoController@edit')->name('edit');
-    Route::post('/todo/edit', 'TodoController@update')->name('update');
+    Route::get('/todo/edit/{id}', 'TodoController@edit')->name('edit');
+    Route::post('/todo/edit/{id}', 'TodoController@update')->name('update');
 });

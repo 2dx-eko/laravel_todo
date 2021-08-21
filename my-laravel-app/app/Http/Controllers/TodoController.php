@@ -52,16 +52,15 @@ class TodoController extends Controller
     }
     
     //詳細ページ
-    public function detail(){
-        $id = request("id"); //URLのパラメータ取得(hidenに格納)
-        (int)$id;
+    public function detail($id){
+        $id = (int)$id;
         $todo = todo::find($id);
         return view('todo.detail',compact("id","todo"));
     }
     
     //編集ページ
-    public function edit(){
-        $id = request("id"); //URLのパラメータ取得(hidenに格納)
+    public function edit($id){
+        $id =(int)$id;
         return view('todo.edit', ['id' => $id]);
     }
     

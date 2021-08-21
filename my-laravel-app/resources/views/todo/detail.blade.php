@@ -22,7 +22,7 @@
     <br>
     <div>
         <button>
-          <a href="/todo/edit/?id={{ $id }}">編集</a>
+          <a href="/todo/edit/{{ $id }}">編集</a>
         </button>
     </div>
 </body>

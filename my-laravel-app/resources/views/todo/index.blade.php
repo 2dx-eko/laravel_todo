@@ -16,7 +16,7 @@
         登録した詳細はこちら
         @foreach ($todos as $todo)
             <li>
-                <a href="/todo/detail/?id={{ $todo['id'] }}">
+                <a href="/todo/detail/{{ $todo['id'] }}">
                 {{ $todo["title"] }}
                 </a>
             </li>
