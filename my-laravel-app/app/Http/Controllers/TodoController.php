@@ -60,8 +60,8 @@ class TodoController extends Controller
     
     //編集ページ
     public function edit($id){
-        $id =(int)$id;
-        return view('todo.edit', ['id' => $id]);
+        $todo = todo::find($id);
+        return view('todo.edit', ['todo' => $todo]);
     }
     
     //編集ページ送信された時実行
@@ -76,13 +76,13 @@ class TodoController extends Controller
           ]);
    
         try{
+            DB::beginTransaction();
             $post = todo::find((int)$request->id);
-            $post->title = $request->title;
-            $post->detail = $request->detail;
-            $post->save();
-
+            $post->fill(['title' => $request->title,'detail' => $request->detail])->save();
+            DB::commit();
             return redirect('/todo');
         }catch(Exeption $e){
+            DB::rollBack();
             return redirect('/todo/new');
         }
     }

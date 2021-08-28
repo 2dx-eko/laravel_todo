@@ -25,7 +25,7 @@
             </div>
         </div>
         <div>
-            <input name="id" type="hidden" value="{{$id}}">
+            <input name="id" type="hidden" value="{{$todo['id']}}">
         </div>
         <button type="submit">登録内容を更新</button>    
     </form>
