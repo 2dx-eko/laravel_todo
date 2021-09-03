@@ -15,7 +15,7 @@ class TodoController extends Controller
     ///一覧画面表示
     public function index(){
         $user_id = Auth::id();
-        $todos = todo::where('user_id',$user_id)->get();
+        $todos = Todo::where('user_id',$user_id)->get();
         return view('todo.index',compact("user_id","todos"));
     }
 
@@ -54,18 +54,26 @@ class TodoController extends Controller
     //詳細ページ
     public function detail($id){
         $id = (int)$id;
-        $todo = todo::find($id);
+        $todo = Todo::find($id);
+        $this->isExistById($id); //IDがDBに存在するかチェック(boolean)
         return view('todo.detail',compact("id","todo"));
     }
     
     //編集ページ
     public function edit($id){
-        $todo = todo::find($id);
+        $this->isExistById($id); //IDがDBに存在するかチェック(boolean)
+        $todo = Todo::find($id);
         return view('todo.edit', ['todo' => $todo]);
     }
     
     //編集ページ送信された時実行
     public function update(Request $request){
+        $id = $request->id;
+        $this->isExistById($id); //IDがDBに存在するかチェック(boolean)
+        $get_id = Todo::find($id);
+        if(!$get_id['user_id']){ //$idを元に紐づいていないidだったら404
+            abort(404);
+        }
         $request->validate([
             'title' => 'required',
             'detail' => 'required',
@@ -77,7 +85,7 @@ class TodoController extends Controller
    
         try{
             DB::beginTransaction();
-            $post = todo::find((int)$request->id);
+            $post = Todo::find((int)$request->id);
             $post->fill(['title' => $request->title,'detail' => $request->detail])->save();
             DB::commit();
             return redirect('/todo');
@@ -86,4 +94,13 @@ class TodoController extends Controller
             return redirect('/todo/new');
         }
     }
+
+    //404用
+    public function isExistById($id){
+        $check = DB::table('todos')->where('id', $id)->exists();
+        if(!$check){
+            abort(404);
+        }
+    }
+
 }
