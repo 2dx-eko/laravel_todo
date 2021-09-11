@@ -7,9 +7,12 @@ use Illuminate\Support\Facades\DB;
 
 class Todo extends Model
 {
-    /*public static function where(){
-        $test = "test";
-        return $test;
-    }*/
     protected $fillable = ['user_id','title', 'detail'];
+
+    //404用
+    public static function isExistById($id){
+        $check = Todo::where('id', $id)->exists();
+        return $check;
+    }
+
 }

@@ -25,5 +25,17 @@
           <a href="/todo/edit/{{ $id }}">編集</a>
         </button>
     </div>
+    <div class="show_name">
+    @foreach ($user_name as $user_names)
+    ログインユーザー名：{{$user_names['name']}}
+    @endforeach
+    </div>
 </body>
 </html>
+<style>
+    .show_name {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+</style>
