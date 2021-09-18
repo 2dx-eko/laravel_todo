@@ -2,6 +2,8 @@
 <html>
 <head>
     <title>一覧画面</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
 </head>
 <body>
     <h1>一覧画面</h1>
@@ -11,16 +13,20 @@
         <div>
             <a href="/todo/new">新規ページ作成画面</a>
         </div>
-        <div>
-        <br><br>
+        <br>
         登録した詳細はこちら
-        @foreach ($todo as $todos)
-            <li>
-                <a href="/todo/detail/{{ $todos['id'] }}">
-                {{ $todos["title"] }}
-                </a>
-            </li>
-        @endforeach
+        <div class="list">
+            @foreach ($todo as $todos)
+                <li>
+                    <a class="list" href="/todo/detail/{{ $todos['id'] }}">
+                    {{ $todos["title"] }}
+                    </a>
+                    <form method="POST">
+                    @csrf
+                    <input name="status" class="check" type="checkbox"> 
+                    </form>
+                </li>
+            @endforeach
         </div>
 
     </ul>
@@ -31,10 +37,21 @@
     </div>
 </body>
 </html>
+<script src="{{asset('js/status.js')}}"></script>
 <style>
     .show_name {
     position: absolute;
     top: 0;
     right: 0;
+}
+
+form {
+    display: inline-block;
+}
+a.list {
+    margin-right: 7px;
+}
+
+input[type="checkbox"] {
 }
 </style>

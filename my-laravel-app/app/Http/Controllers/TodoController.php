@@ -62,7 +62,7 @@ class TodoController extends Controller
         $check = Todo::isExistById($id); //IDがDBに存在するかチェック(boolean)
         $user_id = $todo["user_id"];
         $user_name = $this->getUserName($user_id);
-        if(!$check){abort(404);}
+        if(!$check) abort(404);
         return view('todo.detail',compact("id","todo","user_name"));
     }
     
