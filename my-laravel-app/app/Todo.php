@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 class Todo extends Model
 {
+    public $timestamps = false;
     protected $fillable = ['user_id','title', 'detail'];
 
     //404用

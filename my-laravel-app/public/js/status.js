@@ -5,6 +5,7 @@ $(function(){
         let get_id = $(this).parent().prev().attr("href");//hrefを取得
         let split_id = get_id.split('/todo/detail/');//切り分ける
         let user_id = split_id[1];//IDのみを取得
+        console.log(user_id);
         $.ajax({
             url: "{{ action('TodoController@updateStatus', ['user_id' => $user->id]) }}",
             type: 'POST',
@@ -19,7 +20,5 @@ $(function(){
             alert("ajax失敗・・・");
         });
 
-            
-        
     });
 });
