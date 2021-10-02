@@ -7,12 +7,12 @@ $(function(){
         let user_id = split_id[1];//IDのみを取得
         console.log(user_id);
         $.ajax({
-            url: "{{ action('TodoController@updateStatus', ['user_id' => $user->id]) }}",
+            url: "api/v1/todo/updateStatus/?user_id=" + user_id,
             type: 'POST',
-            data: {'user_id': user_id}
         })
         // Ajaxリクエストが成功した場合
         .done(function(data) {
+            console.log(data);
             console.log("ajax成功");
         })
         // Ajaxリクエストが失敗した場合
