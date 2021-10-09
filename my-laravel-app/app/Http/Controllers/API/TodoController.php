@@ -11,7 +11,7 @@ class TodoController extends Controller
 {
     //チェックボックスクリックでステータス更新用メソッド
     public function updateStatus(){
-        $id = $_GET["user_id"];
+        $id = $_GET["todo_id"];
         $item = Todo::where('id', $id)->first();
         if($item["status"] == 1){
             $item->status = 0;

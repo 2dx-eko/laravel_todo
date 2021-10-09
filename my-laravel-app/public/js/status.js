@@ -2,12 +2,10 @@ $(function(){
     let list = $(".list");
     
     $('input[name="status"]').change(function() {
-        let get_id = $(this).parent().prev().attr("href");//hrefを取得
-        let split_id = get_id.split('/todo/detail/');//切り分ける
-        let user_id = split_id[1];//IDのみを取得
-        console.log(user_id);
+        let id = $(this).data();
+        let todo_id = id.todoid;
         $.ajax({
-            url: "api/v1/todo/updateStatus/?user_id=" + user_id,
+            url: "api/v1/todo/updateStatus/?todo_id=" + todo_id,
             type: 'POST',
         })
         // Ajaxリクエストが成功した場合
