@@ -26,4 +26,26 @@ $(function(){
         });
 
     });
+
+    $('button.delete').click(function() {
+        let id = $(this).data();
+        let todo_id = id.todoid;
+        $.ajax({
+            type: 'POST',
+            url: "api/v1/todo/deleteStatus/",
+            data: {"todo_id" : todo_id},
+            datatype: "json",            
+        })
+        // Ajaxリクエストが成功した場合
+        .done(function(data) {
+            console.log(data);
+            alert("登録情報を削除しました");
+        })
+        // Ajaxリクエストが失敗した場合
+        .fail(function(data) {
+            alert(data);
+        });
+
+    });
+
 });

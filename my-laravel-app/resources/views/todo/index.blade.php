@@ -18,12 +18,13 @@
         <div class="list">
             @foreach ($todo as $todos)
                 <li>
-                    <a class="list" href="/todo/detail/">
+                    <a class="list" href="/todo/detail/{{ $todos['id'] }}">
                     {{ $todos["title"] }}
                     </a>
                     <form method="POST">
                     @csrf
-                    <input name="status" class="check" type="checkbox" data-todoid="{{ $todos['id'] }}"> 
+                    <input name="status" class="check" type="checkbox" data-todoid="{{ $todos['id'] }}">
+                    <button name="delete" class="delete" type="button" data-todoid="{{ $todos['id'] }}">削除</button>
                     </form>
                 </li>
             @endforeach
