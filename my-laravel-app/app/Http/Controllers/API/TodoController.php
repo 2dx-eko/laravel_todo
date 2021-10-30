@@ -48,21 +48,40 @@ class TodoController extends Controller
         try{
             DB::beginTransaction();
             $id = $_POST["todo_id"];
-
+            if(!DB::table('todos')->where('id', $id)->exists()){
+                return "不正なパラメータを検知したため中止します";
+            }
             Todo::where('id', $id)->delete();
             DB::commit();
-            $result = response()->json(['todo_id' => $id]);
-            if($result){
-                return [$result,"success"];
-            }else{
-                return "fail";
-            }
+            return response()->json(['todo_id' => $id, 'result' => 'success']);
 
         }catch(PDOExeption $Exeption){
             DB::rollBack();
+            echo "fail";
             echo $e->getMessage();
         }
     }
 
+    //検索
+    public function searchStatus(){
+        try{
+            DB::beginTransaction();
+            $title = $_POST['searchvalue'];
+            $status = $_POST['searchstatus'];
 
+            if(!DB::table('todos')->where('title', $title)->where('status', $status)->exists()){
+                return "検索結果が見つかりませんでした";
+            }
+
+            //値とステータスの2種類で検索するように修正
+            $search = Todo::where('title', $title)->where('status', $status)->first();
+            DB::commit();
+            return response()->json(['title' => $title, 'status' => $status]);
+
+        }catch(PDOExeption $Exeption){
+            DB::rollBack();
+            echo "fail";
+            echo $e->getMessage();
+        }
+    }
 }

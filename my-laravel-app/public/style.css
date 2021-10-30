@@ -1,0 +1,16 @@
+
+.show_name {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+form {
+    display: inline-block;
+}
+a.list {
+    margin-right: 7px;
+}
+
+input[type="checkbox"] {
+}

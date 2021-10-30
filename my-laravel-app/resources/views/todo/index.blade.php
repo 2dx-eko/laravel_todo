@@ -3,10 +3,22 @@
 <head>
     <title>一覧画面</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
+    <link href="{{asset('style.css')}}" rel="stylesheet">
 </head>
 <body>
     <h1>一覧画面</h1>
+    <form method="POST">
+    @csrf
+    <input name="search_value" class="search_value" type="text">  
+    <input class="status" type="radio" name="status" value="1" checked>完了
+    <input class="status" type="radio" name="status" value="0">未完了
+
+    <button name="search_button" class="search_button" type="button">検索</button>
+    <div class="search_res">
+        <p>↓↓検索結果↓↓</p>
+        <div class="result"></div>
+    </div>
+    </form>
     <ul>
         
         <li>ログインしているユーザーID：{{ $id }}</li>
@@ -39,20 +51,3 @@
 </body>
 </html>
 <script src="{{asset('js/status.js')}}"></script>
-<style>
-    .show_name {
-    position: absolute;
-    top: 0;
-    right: 0;
-}
-
-form {
-    display: inline-block;
-}
-a.list {
-    margin-right: 7px;
-}
-
-input[type="checkbox"] {
-}
-</style>
