@@ -14,10 +14,17 @@ class TodoController extends Controller
 {
     ///一覧画面表示
     public function index(){
+        //検索取得用
+        $search_value = $_GET['search_value'];
+        $search_status = $_GET['status'];
+        if($search_value && $search_status){
+            $search = Todo::where('title',$search_value)->where('status',$search_status)->get();
+        }
+        //ログイン名取得、登録したリスト取得
         $id = Auth::id();
         $todo = Todo::where('user_id',$id)->get();
         $user_name = $this->getUserName($id);
-        return view('todo.index',compact("id","todo","user_name"));
+        return view('todo.index',compact("id","todo","user_name","search"));
     }
 
     public function getUserName($user_id){

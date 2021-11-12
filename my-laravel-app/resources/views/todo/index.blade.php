@@ -7,16 +7,20 @@
 </head>
 <body>
     <h1>一覧画面</h1>
-    <form method="POST">
+    <form method="GET">
     @csrf
     <input name="search_value" class="search_value" type="text">  
     <input class="status" type="radio" name="status" value="1" checked>完了
     <input class="status" type="radio" name="status" value="0">未完了
 
-    <button name="search_button" class="search_button" type="button">検索</button>
+    <input type="submit" name="search_button" class="search_button" type="button"></input>
     <div class="search_res">
         <p>↓↓検索結果↓↓</p>
-        <div class="result"></div>
+        <div class="result">
+            @if(isset( $search ))
+                {{$search[0]['title']}}
+            @endif
+        </div>
     </div>
     </form>
     <ul>

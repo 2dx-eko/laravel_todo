@@ -51,9 +51,9 @@ $(function(){
         });
 
     });
-
+/*検索ajax
     $('.search_res').hide();
-    $('button.search_button').click(function() {
+    $('.search_button').click(function() {
         let value = $('.search_value').val();
         let status = $('input:radio[name="status"]:checked').val();
         $.ajax({
@@ -74,10 +74,10 @@ $(function(){
         })
         // Ajaxリクエストが失敗した場合
         .fail(function(data) {
-            alert(data);
+           console.log(data);
         });
 
     });
-
+ */
 
 });
