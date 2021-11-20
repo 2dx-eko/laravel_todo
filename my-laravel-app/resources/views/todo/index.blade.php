@@ -17,8 +17,10 @@
     <div class="search_res">
         <p>↓↓検索結果↓↓</p>
         <div class="result">
-            @if(isset( $search ))
-                {{$search[0]['title']}}
+            @if(isset( $todos ))
+                @foreach ($todos as $todoses)
+                   ・{{$todoses['title']}}<br>
+                @endforeach
             @endif
         </div>
     </div>
