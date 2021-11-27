@@ -13,35 +13,34 @@ use Illuminate\Support\Facades\Auth;
 class TodoController extends Controller
 {
     ///一覧画面表示
-    public function index(){
+    public function index(Request $request){
         //検索取得用
-    
+        if (empty($_POST["search_value"]) && empty($_POST["status"])) {
             $search_value = $_GET['search_value'];
             $search_status = $_GET['status'];
-            $query = Todo::query();
-            $query = Todo::where('title',$search_value)->where('status',$search_status);
-            if(!empty($search_value) && !empty($search_status)) {//タイトル検索あり、ステータス検索あり
-
-                $query->where('title', 'like', '%'.$search_value.'%');
-                $query->where('status', 'like', '%'.$search_status.'%');
-
-            }else if(empty($search_value) && !empty($search_status)){//タイトル検索なし、ステータス検索あり
-
-                $query->where('status', 'like', '%'.$search_status.'%');
-
-            }else if(!empty($search_value) && empty($search_status)){//タイトル検索あり、ステータス検索なし
-
-                $query->where('title', 'like', '%'.$search_status.'%');
-
-            }else if(empty($search_value) && empty($search_status)){//タイトル検索なし、ステータス検索なし
-
-                $query->where('title', 'like', '%'.$search_value.'%')->orwhere('status', 'like', '%'.$search_status.'%');
-                
-            }
+        }else{
+            $search_value = "";
+            $search_status = "";
+        }
             
-            $todos = $query->get();
-            var_dump($todos);
-      
+        $query = Todo::query();
+        
+        if($search_value) {//タイトルパラメータがあれば
+            $query->where('title', 'like', '%'.$search_value.'%');
+        }
+        if($search_status){//ステータスパラメータがあれば
+            $query->where('status',$search_status);
+        }
+
+        //sortボタンが押されたら作動
+        if($request->has('sort_button')){
+            $sort = $_GET['sort'];
+            $query->oldest($sort)->get();
+        }
+
+        
+        
+        $todos = $query->get();
 
         //ログイン名取得、登録したリスト取得
         $id = Auth::id();

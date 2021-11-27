@@ -9,11 +9,17 @@
     <h1>一覧画面</h1>
     <form method="GET">
     @csrf
-    <input name="search_value" class="search_value" type="text">  
-    <input class="status" type="radio" name="status" value="1" checked>完了
-    <input class="status" type="radio" name="status" value="0">未完了
-
-    <input type="submit" name="search_button" class="search_button" type="button"></input>
+    <input name="search_value" type="text"> 
+    <input type="radio" name="status" value="1" checked>完了
+    <input type="radio" name="status" value="0">未完了
+    <input type="submit" name="search_button" type="button" value="検索"></input>
+    <br>
+    <br>
+    <input type="radio" name="sort" value="title" checked>title順
+    <input type="radio" name="sort" value="created_at">作成日時順
+    <input type="submit" name="sort_button" type="button" value="ソート"></input>
+    <br>
+    <br>
     <div class="search_res">
         <p>↓↓検索結果↓↓</p>
         <div class="result">
