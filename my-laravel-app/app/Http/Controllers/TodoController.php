@@ -34,11 +34,21 @@ class TodoController extends Controller
 
         //sortボタンが押されたら作動
         if($request->has('sort_button')){
-            $sort = $_GET['sort'];
-            $query->oldest($sort)->get();
+            
+//            $query->oldest($sortkey);
+            $sortkey = $_GET['sort_key']; //title順、作成日順
+            $sort = $_GET['sort'];//昇順降順
+            
+            if($sortkey == 'title' && $sort == 'ascending'){
+                $query->orderBy($sortkey,'asc');
+            }else if($sortkey == 'title' && $sort == 'descending'){
+                $query->orderBy($sortkey,'desc');
+            }else if($sortkey == 'created_at' && $sort == 'ascending'){
+                $query->orderBy($sortkey,'asc');
+            }else if($sortkey == 'created_at' && $sort == 'descending'){
+                $query->orderBy($sortkey,'desc');
+            }
         }
-
-        
         
         $todos = $query->get();
 

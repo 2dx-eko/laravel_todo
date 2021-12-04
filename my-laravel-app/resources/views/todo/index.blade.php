@@ -15,10 +15,15 @@
     <input type="submit" name="search_button" type="button" value="検索"></input>
     <br>
     <br>
-    <input type="radio" name="sort" value="title" checked>title順
-    <input type="radio" name="sort" value="created_at">作成日時順
+    <input type="radio" name="sort_key" value="title" checked>title順
+    <input type="radio" name="sort_key" value="created_at">作成日時順
+    :
+    <input type="radio" name="sort" value="ascending" checked>昇順
+    <input type="radio" name="sort" value="descending">降順
     <input type="submit" name="sort_button" type="button" value="ソート"></input>
     <br>
+
+    </form>
     <br>
     <div class="search_res">
         <p>↓↓検索結果↓↓</p>
@@ -30,9 +35,7 @@
             @endif
         </div>
     </div>
-    </form>
-    <ul>
-        
+    <ul>        
         <li>ログインしているユーザーID：{{ $id }}</li>
         <div>
             <a href="/todo/new">新規ページ作成画面</a>
