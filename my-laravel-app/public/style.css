@@ -14,3 +14,11 @@ a.list {
 
 input[type="checkbox"] {
 }
+ul.pagination {
+    list-style: none;
+    display: flex;
+}
+
+ul.pagination li {
+    margin-right: 10px;
+}

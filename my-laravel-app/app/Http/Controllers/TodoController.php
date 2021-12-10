@@ -15,12 +15,13 @@ class TodoController extends Controller
     ///一覧画面表示
     public function index(Request $request){
         //検索取得用
-        if (empty($_POST["search_value"]) && empty($_POST["status"])) {
+        $search_value = "";
+        $search_status = "";
+        if (isset($_GET["search_value"])) {
             $search_value = $_GET['search_value'];
+        }   
+        if(isset($_GET["status"])){
             $search_status = $_GET['status'];
-        }else{
-            $search_value = "";
-            $search_status = "";
         }
             
         $query = Todo::query();
@@ -52,11 +53,14 @@ class TodoController extends Controller
         
         $todos = $query->get();
 
+        //ページャー用
+        $pager = DB::table('todos')->paginate(5);
+
         //ログイン名取得、登録したリスト取得
         $id = Auth::id();
         $todo = Todo::where('user_id',$id)->get();
         $user_name = $this->getUserName($id);
-        return view('todo.index',compact("id","user_name","todo","todos"));
+        return view('todo.index',compact("id","user_name","todo","todos","pager"));
     }
 
     public function getUserName($user_id){

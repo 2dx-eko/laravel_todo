@@ -58,6 +58,18 @@
         </div>
 
     </ul>
+
+      <ul class="list-group">
+        @foreach ($pager as $pagers)
+          <li class="list-group-item">
+            {{ $pagers->title }}
+          </li>
+        @endforeach
+      </ul>
+      {{ $pager->links() }}
+
+
+
     <div class="show_name">
         @foreach ($user_name as $user_names)
         ログインユーザー名：{{$user_names['name']}}
