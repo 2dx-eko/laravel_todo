@@ -22,15 +22,16 @@
     <input type="radio" name="sort" value="descending">降順
     <input type="submit" name="sort_button" type="button" value="ソート"></input>
     <br>
-
+    <br>
+    <input type="submit" name="csv_button" type="button" value="CSV出力"></input>
     </form>
     <br>
     <div class="search_res">
         <p>↓↓検索結果↓↓</p>
         <div class="result">
             @if(isset( $todos ))
-                @foreach ($todos as $todoses)
-                   ・{{$todoses['title']}}<br>
+                @foreach ($todos as $search)
+                   ・{{$search['title']}}<br>
                 @endforeach
             @endif
         </div>
@@ -43,15 +44,15 @@
         <br>
         登録した詳細はこちら
         <div class="list">
-            @foreach ($todo as $todos)
+            @foreach ($todos as $detail)
                 <li>
-                    <a class="list" href="/todo/detail/{{ $todos['id'] }}">
-                    {{ $todos["title"] }}
+                    <a class="list" href="/todo/detail/{{ $detail['id'] }}">
+                    {{ $detail["title"] }}
                     </a>
                     <form method="POST">
                     @csrf
-                    <input name="status" class="check" type="checkbox" data-todoid="{{ $todos['id'] }}">
-                    <button name="delete" class="delete" type="button" data-todoid="{{ $todos['id'] }}">削除</button>
+                    <input name="status" class="check" type="checkbox" data-todoid="{{ $detail['id'] }}">
+                    <button name="delete" class="delete" type="button" data-todoid="{{ $detail['id'] }}">削除</button>
                     </form>
                 </li>
             @endforeach

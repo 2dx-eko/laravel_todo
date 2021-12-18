@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 use App\todo;
 use App\User;
 use Illuminate\Support\Facades\Auth;
-
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class TodoController extends Controller
 {
@@ -36,7 +36,6 @@ class TodoController extends Controller
         //sortボタンが押されたら作動
         if($request->has('sort_button')){
             
-//            $query->oldest($sortkey);
             $sortkey = $_GET['sort_key']; //title順、作成日順
             $sort = $_GET['sort'];//昇順降順
             
@@ -50,17 +49,46 @@ class TodoController extends Controller
                 $query->orderBy($sortkey,'desc');
             }
         }
+        if($request->has('csv_button')){
+            //$csv_value = $request->search_value;
+            $get = $query->get();
+
+            $cvsList = [];
+            for($i = 0; $i < count($get); $i++){
+                $info = [];
+                array_push($info,$get[$i]['user_id'],$get[$i]['title']);
+                array_push($cvsList,$info);
+            }
+       
+            
+           $response = new StreamedResponse (function() use ($request, $cvsList){
+               $stream = fopen('php://output', 'w');
+   
+               //　文字化け回避
+               stream_filter_prepend($stream,'convert.iconv.utf-8/cp932//TRANSLIT');
+   
+               // CSVデータ
+               foreach($cvsList as $key => $value) {
+                   fputcsv($stream, $value);
+               }
+               fclose($stream);
+           });
+           $response->headers->set('Content-Type', 'application/octet-stream');
+           $response->headers->set('Content-Disposition', 'attachment; filename="sample.csv"');
+    
+           return $response;
+        }
         
         $todos = $query->get();
 
         //ページャー用
-        $pager = DB::table('todos')->paginate(5);
+        $pager = $query->paginate(TODO::PAGENATION);
 
         //ログイン名取得、登録したリスト取得
         $id = Auth::id();
-        $todo = Todo::where('user_id',$id)->get();
+        
         $user_name = $this->getUserName($id);
-        return view('todo.index',compact("id","user_name","todo","todos","pager"));
+        return view('todo.index',compact("id","user_name","todos","pager","users"));
     }
 
     public function getUserName($user_id){
