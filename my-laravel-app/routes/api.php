@@ -21,3 +21,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('/v1/todo/updateStatus', 'API\TodoController@updateStatus');
 Route::post('/v1/todo/deleteStatus', 'API\TodoController@deleteStatus');
 Route::post('/v1/todo/searchStatus', 'API\TodoController@searchStatus');
+Route::post('/v1/todo/export', 'API\TodoController@export');

@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class TodoController extends Controller
 {
+
     ///一覧画面表示
     public function index(Request $request){
         //検索取得用
@@ -49,35 +50,7 @@ class TodoController extends Controller
                 $query->orderBy($sortkey,'desc');
             }
         }
-        if($request->has('csv_button')){
-            //$csv_value = $request->search_value;
-            $get = $query->get();
 
-            $cvsList = [];
-            for($i = 0; $i < count($get); $i++){
-                $info = [];
-                array_push($info,$get[$i]['user_id'],$get[$i]['title']);
-                array_push($cvsList,$info);
-            }
-       
-            
-           $response = new StreamedResponse (function() use ($request, $cvsList){
-               $stream = fopen('php://output', 'w');
-   
-               //　文字化け回避
-               stream_filter_prepend($stream,'convert.iconv.utf-8/cp932//TRANSLIT');
-   
-               // CSVデータ
-               foreach($cvsList as $key => $value) {
-                   fputcsv($stream, $value);
-               }
-               fclose($stream);
-           });
-           $response->headers->set('Content-Type', 'application/octet-stream');
-           $response->headers->set('Content-Disposition', 'attachment; filename="sample.csv"');
-    
-           return $response;
-        }
         
         $todos = $query->get();
 

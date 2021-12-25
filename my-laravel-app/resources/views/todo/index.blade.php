@@ -4,6 +4,7 @@
     <title>一覧画面</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <link href="{{asset('style.css')}}" rel="stylesheet">
+
 </head>
 <body>
     <h1>一覧画面</h1>
@@ -23,7 +24,7 @@
     <input type="submit" name="sort_button" type="button" value="ソート"></input>
     <br>
     <br>
-    <input type="submit" name="csv_button" type="button" value="CSV出力"></input>
+    <button class="csv" type="button" name="csv_button" value="CSV出力">CSV出力</button>
     </form>
     <br>
     <div class="search_res">

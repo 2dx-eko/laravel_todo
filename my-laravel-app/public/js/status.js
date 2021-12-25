@@ -1,7 +1,7 @@
 $(function(){
     let list = $(".list");
     
-    $('input[name="status"]').change(function() {
+    $('.check').change(function() {
         let id = $(this).data();
         let todo_id = id.todoid;
         /*$.ajax({
@@ -10,7 +10,7 @@ $(function(){
         })*/
         $.ajax({
             type: 'POST',
-            url: "api/v1/todo/updateStatus/",
+            url: "/api/v1/todo/updateStatus/",
             data: {"todo_id" : todo_id},
             datatype: "json",
             
@@ -32,7 +32,7 @@ $(function(){
         let todo_id = id.todoid;
         $.ajax({
             type: 'POST',
-            url: "api/v1/todo/deleteStatus/",
+            url: "/api/v1/todo/deleteStatus/",
             data: {"todo_id" : todo_id},
             datatype: "json",            
         })
@@ -51,33 +51,31 @@ $(function(){
         });
 
     });
-/*検索ajax
-    $('.search_res').hide();
-    $('.search_button').click(function() {
-        let value = $('.search_value').val();
+
+    $('.csv').click(function() {
+        
+        let serch_text = $('input[name="search_value"]').val();
         let status = $('input:radio[name="status"]:checked').val();
         $.ajax({
             type: 'POST',
-            url: "api/v1/todo/searchStatus/",
+            url: "/api/v1/todo/export/",
             data: {
-                "searchvalue" : value,
-                "searchstatus" : status,
+                "serch_text" : serch_text,
+                "status" : status,
             },
             datatype: "json",            
         })
         // Ajaxリクエストが成功した場合
         .done(function(data) {
-            console.log(data);
-            $('.search_res').show();
-            $('.result').html("タイトル:" + data.title + "<br>" + "ステータス:" + data.status);
+          console.log(data);
             
         })
         // Ajaxリクエストが失敗した場合
         .fail(function(data) {
-           console.log(data);
+            console.log(data);
         });
 
     });
- */
+
 
 });

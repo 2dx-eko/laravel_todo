@@ -84,4 +84,39 @@ class TodoController extends Controller
             echo $e->getMessage();
         }
     }
+
+    //CSV出力
+    public function export(Request $request){
+        $serch_text = $_POST["serch_text"];
+        $status = $_POST["status"];
+        $query = Todo::query();
+        
+        if($serch_text) {
+            $query->where('title', 'like', '%'.$serch_text.'%');
+        }
+        if($status){
+            $query->where('status',$status);
+        }
+        $search_info = $query->get();
+    // リスト
+
+    // ファイル生成
+    $stream = fopen('http://localhost:8001/api/v1/todo/export/', 'w');
+    fwrite($stream, pack('C*',0xEF,0xBB,0xBF)); // BOM をつける
+
+    // ヘッダー
+    fputcsv($stream, ['header1', 'header2']);
+
+    // 
+    foreach ($search_info as $search_infos) {
+        fputcsv($stream, $search_infos);
+    }
+
+    return response(stream_get_contents($stream), 200)
+                 ->header('Content-Type', 'text/csv')
+                 ->header('Content-Disposition', 'attachment; filename="demo.csv"');
+
+        return response()->json(['stream' => $stream,]);   
+    }
+
 }
