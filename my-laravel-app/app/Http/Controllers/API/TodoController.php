@@ -85,7 +85,7 @@ class TodoController extends Controller
         }
     }
 
-    //CSV出力
+    //CSV作成
     public function export(Request $request){
         $serch_text = $_POST["serch_text"];
         $status = $_POST["status"];
@@ -111,7 +111,7 @@ class TodoController extends Controller
     foreach ($search_info as $search_infos) {
         fputcsv($stream, $search_infos);
     }
-
+    fclose($stream);
     return response(stream_get_contents($stream), 200)
                  ->header('Content-Type', 'text/csv')
                  ->header('Content-Disposition', 'attachment; filename="demo.csv"');
