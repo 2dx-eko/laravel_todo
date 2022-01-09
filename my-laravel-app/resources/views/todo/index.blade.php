@@ -24,7 +24,7 @@
     <input type="submit" name="sort_button" type="button" value="ソート"></input>
     <br>
     <br>
-    <button class="csv" type="button" name="csv_button" value="CSV作成">CSV作成</button>
+    <button class="create_csv" type="button" name="csv_button" value="CSV作成">CSV作成</button>
     <button class="csv_output" type="button" name="csv_output" value="CSV出力">CSV出力</button>
     <div>
        作成日：<span class="csv_date"></span><br>

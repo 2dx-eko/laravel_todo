@@ -53,7 +53,7 @@ $(function(){
     });
 
     //csv作成
-    $('.csv').click(function() {
+    $('.create_csv').click(function() {
         let serch_text = $('input[name="search_value"]').val();
         let status = $('input:radio[name="status"]:checked').val();
         var now = new Date();
@@ -66,7 +66,7 @@ $(function(){
         var mi = now.getMinutes();
         var s = now.getSeconds();
         $(".csv_date").text(y + '年' + m + '月' + d + '日' + h + '時' + mi + '分' + s + '秒' + '(' + wd[w] + ')');
-        $(".csv_name").text("demo.csv");
+        
 
         $.ajax({
             type: 'POST',
