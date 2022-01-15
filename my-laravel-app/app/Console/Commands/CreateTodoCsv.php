@@ -22,7 +22,7 @@ class CreateTodoCsv extends Command
      *
      * @var string
      */
-    protected $signature = 'create:todocsv';
+    protected $signature = 'create:todocsv {serch_text}{status}{query?}';
 
     /**
      * The console command description.
@@ -48,9 +48,10 @@ class CreateTodoCsv extends Command
      */
     public function handle()
     {
-        $serch_text = $_POST["serch_text"];
-        $status = $_POST["status"];
-        $query = Todo::query();
+        $serch_text = $this->argument('serch_text');
+        $status = $this->argument('status');
+        $query = $this->argument('query');
+    
         
         if($serch_text) {
             $query->where('title', 'like', '%'.$serch_text.'%');
@@ -59,24 +60,37 @@ class CreateTodoCsv extends Command
             $query->where('status',$status);
         }
         $search_info = $query->get();
+        
+        //ロックファイル生成(作成状況の確認)
+        $day = date('Y-m-d');
+        $filename = $day . "lock.txt";
+        $updated_at = date('Y-m-d H:i:s');
+        $situation = [$status,$filename,$updated_at];
+       
+         $fp = fopen("/var/tmp/lock.txt", "w");
+         foreach($situation as $situations){
+            fwrite($fp, $situations."\n");
+         } 
+         fwrite($fp, $situation);
+        fclose($fp);
 
-    // ここからcsv
-        $stream = fopen('http://localhost:8001/var/tmp', 'w');
- 
+
+        //csv生成
+        $stream = fopen('/var/tmp/demo.csv', 'w');
         foreach ($search_info as $search_infos) {
             $line = implode(',',$search_infos);
             fwrite($stream,$line . "\n");
         }
         fclose($stream);
+
+    }
+}
+    /*
         header('Content-Type: application/octet-stream');
         header('Content-Length: '.filesize($filepath));
         header('Content-Disposition: attachment; filename=member.csv');
 
         readfile($filepath);
-    }
-}
-    /*
-
     // ファイル生成
     $stream = fopen('http://localhost:8001/api/v1/todo/export/', 'w');
     fwrite($stream, pack('C*',0xEF,0xBB,0xBF)); // BOM をつける

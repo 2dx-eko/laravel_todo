@@ -88,6 +88,10 @@ class TodoController extends Controller
 
     //CSV作成
     public function export(Request $request){
-        Artisan::call('create:todocsv');
+        $serch_text = $_POST["serch_text"];
+        $status = $_POST["status"];
+        $query = Todo::query();
+        Artisan::call('create:todocsv', ['serch_text' => $serch_text,'status' => $status,'query' => $query]);
+        
     }
 }
