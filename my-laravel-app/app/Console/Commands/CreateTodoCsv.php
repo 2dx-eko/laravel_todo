@@ -65,16 +65,16 @@ class CreateTodoCsv extends Command
         $day = date('Y-m-d');
         $filename = $day . "lock.txt";
         $updated_at = date('Y-m-d H:i:s');
-        $situation = [$status,$filename,$updated_at];
+        $lines = [$status,$filename,$updated_at];
        
          $fp = fopen("/var/tmp/lock.txt", "w");
-         foreach($situation as $situations){
-            fwrite($fp, $situations."\n");
+         foreach($lines as $line){
+            fwrite($fp, $line,"\n");
          } 
-         fwrite($fp, $situation);
+         fwrite($fp, $line);
         fclose($fp);
 
-
+/*
         //csv生成
         $stream = fopen('/var/tmp/demo.csv', 'w');
         foreach ($search_info as $search_infos) {
@@ -82,7 +82,7 @@ class CreateTodoCsv extends Command
             fwrite($stream,$line . "\n");
         }
         fclose($stream);
-
+*/
     }
 }
     /*
