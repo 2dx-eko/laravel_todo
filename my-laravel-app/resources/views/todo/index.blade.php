@@ -8,6 +8,15 @@
 </head>
 <body>
     <h1>一覧画面</h1>
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
     <form method="GET">
     @csrf
     <input name="search_value" type="text"> 

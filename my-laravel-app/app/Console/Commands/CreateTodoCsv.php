@@ -50,8 +50,7 @@ class CreateTodoCsv extends Command
     {
         $serch_text = $this->argument('serch_text');
         $status = $this->argument('status');
-        $query = $this->argument('query');
-    
+        $query = Todo::query();
         
         if($serch_text) {
             $query->where('title', 'like', '%'.$serch_text.'%');
@@ -59,26 +58,29 @@ class CreateTodoCsv extends Command
         if($status){
             $query->where('status',$status);
         }
-        $search_info = $query->get();
-        
+        $search_infos= $query->get();
+
         //ロックファイル生成(作成状況の確認)
         $day = date('Y-m-d');
         $filename = $day . "lock.txt";
-        $updated_at = date('Y-m-d H:i:s');
-        $lines = [$status,$filename,$updated_at];
+        $total = count(Todo::all());
+        $count = count($search_infos);
+        $updated_at = date('Y-m-d H:i:s'); 
+       $lines = $status.",".$filename.",".$count.",".$total.",".$updated_at ."\n";
+
+        $fp = fopen("/var/tmp/lock.txt", "w");
+        fwrite($fp, $lines);
+        /*foreach(??){
+            fwrite($fp, ??);
+        }*/
        
-         $fp = fopen("/var/tmp/lock.txt", "w");
-         foreach($lines as $line){
-            fwrite($fp, $line,"\n");
-         } 
-         fwrite($fp, $line);
         fclose($fp);
 
 /*
         //csv生成
         $stream = fopen('/var/tmp/demo.csv', 'w');
-        foreach ($search_info as $search_infos) {
-            $line = implode(',',$search_infos);
+        foreach ($search_infos as $search_info) {
+            $line = implode(',',$search_info);
             fwrite($stream,$line . "\n");
         }
         fclose($stream);
