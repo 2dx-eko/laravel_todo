@@ -70,21 +70,24 @@ class CreateTodoCsv extends Command
 
         $fp = fopen("/var/tmp/lock.txt", "w");
         fwrite($fp, $lines);
-        /*foreach(??){
-            fwrite($fp, ??);
-        }*/
        
         fclose($fp);
 
-/*
+
         //csv生成
-        $stream = fopen('/var/tmp/demo.csv', 'w');
+        $stream = fopen('/var/tmp/demo.csv', 'a');
         foreach ($search_infos as $search_info) {
-            $line = implode(',',$search_info);
+            //csv書き込み
+            $array = $search_info->toArray();
+            $line = implode('_',$array);
             fwrite($stream,$line . "\n");
+
+            //ロックファイル更新
+            $fp = fopen("/var/tmp/lock.txt", "a");
+            fwrite($fp,$line . "\n");
+
         }
         fclose($stream);
-*/
     }
 }
     /*
